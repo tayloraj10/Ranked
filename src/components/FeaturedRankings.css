@@ -1,0 +1,21 @@
+.featured-rankings-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #10b981;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    background: linear-gradient(90deg, #10b981, #059669);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0;
+}
+
+[data-theme='dark'] .featured-rankings-title {
+    color: #34d399;
+    background: linear-gradient(90deg, #34d399, #10b981);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
