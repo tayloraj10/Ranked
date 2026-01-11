@@ -3,12 +3,13 @@ import { sampleRankingsInitial } from '../data/sampleRankingsInitial';
 import type { RankingModel, UserSubmission } from '../models/Ranking';
 import { processSubmission, validateSubmission } from '../utils/scoringUtils';
 import { getCachedUserId } from '../utils/userUtils';
-import { fetchRankings as fetchFromFirestore, submitRanking as submitToFirestore, initializeSampleData } from '../services/firestoreService';
+import { fetchRankings as fetchFromFirestore, submitRanking as submitToFirestore, initializeSampleData, deleteSubmission as deleteFromFirestore } from '../services/firestoreService';
 
 interface RankingContextValue {
     rankings: RankingModel[];
     setRankings: React.Dispatch<React.SetStateAction<RankingModel[]>>;
     submitRanking: (rankingId: string, submission: UserSubmission) => Promise<boolean>;
+    deleteSubmission: (rankingId: string) => Promise<boolean>;
     currentUserId: string;
 }
 
@@ -90,6 +91,24 @@ export const RankingProvider: React.FC<{ children: React.ReactNode }> = ({ child
         }
     };
 
+    const deleteSubmission = async (rankingId: string): Promise<boolean> => {
+        try {
+            // Delete from Firestore
+            const success = await deleteFromFirestore(rankingId, currentUserId);
+            
+            if (success) {
+                // Refresh rankings from Firestore to get updated data
+                const updatedRankings = await fetchFromFirestore();
+                setRankings(updatedRankings);
+                return true;
+            }
+            return false;
+        } catch (error) {
+            console.error('Error deleting submission:', error);
+            return false;
+        }
+    };
+
     if (isLoading) {
         return (
             <div style={{
@@ -132,7 +151,7 @@ export const RankingProvider: React.FC<{ children: React.ReactNode }> = ({ child
     }
 
     return (
-        <RankingContext.Provider value={{ rankings, setRankings, submitRanking, currentUserId }}>
+        <RankingContext.Provider value={{ rankings, setRankings, submitRanking, deleteSubmission, currentUserId }}>
             {children}
         </RankingContext.Provider>
     );

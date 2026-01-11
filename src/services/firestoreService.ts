@@ -218,3 +218,43 @@ export const submitSuggestion = async (
         return false;
     }
 };
+
+/**
+ * Delete a user's submission from a ranking
+ */
+export const deleteSubmission = async (
+    rankingId: string,
+    userId: string
+): Promise<boolean> => {
+    try {
+        const docRef = doc(db, RANKINGS_COLLECTION, rankingId);
+        const snapshot = await getDoc(docRef);
+        
+        if (!snapshot.exists()) {
+            console.error('Ranking not found');
+            return false;
+        }
+
+        const ranking = snapshot.data() as RankingModel;
+        
+        // Remove user from votes array
+        const votes = ranking.votes.filter(v => v !== userId);
+        
+        // Remove user's submission
+        const submissions = ranking.submissions.filter(s => s.userId !== userId);
+        
+        // Recalculate scores without this user's submission
+        const options = recalculateScores(ranking.options, submissions);
+
+        await updateDoc(docRef, {
+            votes,
+            submissions,
+            options,
+        });
+
+        return true;
+    } catch (error) {
+        console.error('Error deleting submission:', error);
+        return false;
+    }
+};

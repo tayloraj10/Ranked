@@ -33,7 +33,7 @@ type SortView = 'yours' | 'community';
 
 
 const Ranking: React.FC<RankingProps> = ({ ranking }) => {
-    const { submitRanking, currentUserId } = useRankingContext();
+    const { submitRanking, deleteSubmission, currentUserId } = useRankingContext();
     const [sortView, setSortView] = useState<SortView>('community');
     const [draftOptions, setDraftOptions] = useState(ranking.options);
     const [displayOptions, setDisplayOptions] = useState(ranking.options);
@@ -41,7 +41,9 @@ const Ranking: React.FC<RankingProps> = ({ ranking }) => {
     const [showSuccess, setShowSuccess] = useState(false);
     const [showError, setShowError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
     const [dragHandleOnly, setDragHandleOnly] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false);
 
     const userSubmission = ranking.submissions.find(s => s.userId === currentUserId);
 
@@ -180,6 +182,7 @@ const Ranking: React.FC<RankingProps> = ({ ranking }) => {
         const success = await submitRanking(ranking.id, submission);
         
         if (success) {
+            setSuccessMessage('Your rankings have been submitted!');
             setShowSuccess(true);
             setHasVoted(true);
             setSortView('community');
@@ -188,6 +191,26 @@ const Ranking: React.FC<RankingProps> = ({ ranking }) => {
             setErrorMessage('Failed to submit ranking. You may have already voted.');
             setShowError(true);
         }
+    };
+
+    const handleDelete = async () => {
+        if (!hasVoted) return;
+        
+        setIsDeleting(true);
+        const success = await deleteSubmission(ranking.id);
+        
+        if (success) {
+            setHasVoted(false);
+            setSortView('yours');
+            setDraftOptions(ranking.options);
+            syncDisplayOptions('yours', false);
+            setSuccessMessage('Your vote has been deleted!');
+            setShowSuccess(true);
+        } else {
+            setErrorMessage('Failed to delete submission. Please try again.');
+            setShowError(true);
+        }
+        setIsDeleting(false);
     };
 
     const handleSortViewChange = (_event: React.MouseEvent<HTMLElement>, value: SortView | null) => {
@@ -228,7 +251,7 @@ const Ranking: React.FC<RankingProps> = ({ ranking }) => {
                         }}
                     >
                         <ToggleButton value="yours">Your ranking</ToggleButton>
-                        <ToggleButton value="community">Community</ToggleButton>
+                        <ToggleButton value="community">Community ranking</ToggleButton>
                     </ToggleButtonGroup>
 
                     {!hasVoted && (
@@ -256,9 +279,26 @@ const Ranking: React.FC<RankingProps> = ({ ranking }) => {
                     )}
 
                     {hasVoted && sortView === 'yours' && userSubmission && (
-                        <p className="user-submission-note">
-                            Showing what you submitted.
-                        </p>
+                        <div className="user-submission-section">
+                            <p className="user-submission-note">
+                                Showing what you submitted.
+                            </p>
+                            <Button 
+                                variant="outlined" 
+                                color="error" 
+                                size="medium"
+                                onClick={handleDelete}
+                                disabled={isDeleting}
+                                sx={{ 
+                                    padding: '0.5em 1.5em',
+                                    fontSize: '0.9rem',
+                                    fontWeight: 600,
+                                    width: { xs: '100%', sm: 'auto' }
+                                }}
+                            >
+                                {isDeleting ? 'Deleting...' : 'Delete My Vote'}
+                            </Button>
+                        </div>
                     )}
                 </div>
             </div>
@@ -309,9 +349,10 @@ const Ranking: React.FC<RankingProps> = ({ ranking }) => {
                                     firstPlaceCount={option.firstPlaceCount}
                                     secondPlaceCount={option.secondPlaceCount}
                                     thirdPlaceCount={option.thirdPlaceCount}
-                                    isTopThree={actualRank <= 3}
+                                    isTopThree={actualRank <= 3 && option.submissionCount > 0}
                                     dragDisabled={dragDisabled}
                                     dragHandleOnly={dragHandleOnly}
+                                    sortView={sortView}
                                 />
                             );
                         })}
@@ -332,7 +373,7 @@ const Ranking: React.FC<RankingProps> = ({ ranking }) => {
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
             >
                 <Alert onClose={() => setShowSuccess(false)} severity="success" sx={{ width: '100%' }}>
-                    Your rankings have been submitted!
+                    {successMessage}
                 </Alert>
             </Snackbar>
 

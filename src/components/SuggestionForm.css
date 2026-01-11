@@ -92,11 +92,11 @@
     .suggestion-form {
         flex-direction: column;
     }
-    
+
     .suggestion-input {
         width: 100%;
     }
-    
+
     .suggestion-submit-btn {
         width: 100%;
     }
