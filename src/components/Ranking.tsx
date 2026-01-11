@@ -145,7 +145,7 @@ const Ranking: React.FC<RankingProps> = ({ ranking }) => {
         }
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (sortView !== 'yours') {
             setErrorMessage('Switch to “Your ranking” to submit.');
             setShowError(true);
@@ -174,7 +174,7 @@ const Ranking: React.FC<RankingProps> = ({ ranking }) => {
             submittedAt: new Date(),
         };
 
-        const success = submitRanking(ranking.id, submission);
+        const success = await submitRanking(ranking.id, submission);
         
         if (success) {
             setShowSuccess(true);
