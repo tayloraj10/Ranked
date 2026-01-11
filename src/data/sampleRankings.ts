@@ -24,6 +24,11 @@ export const sampleRankings: RankingModel[] = [
             { id: '1', title: 'JavaScript', userId: 'user4', votes: 200 },
             { id: '2', title: 'Python', userId: 'user5', votes: 180 },
             { id: '3', title: 'Rust', userId: 'user6', votes: 150 },
+            { id: '4', title: 'TypeScript', userId: 'user50', votes: 165 },
+            { id: '5', title: 'Go', userId: 'user51', votes: 140 },
+            { id: '6', title: 'Java', userId: 'user52', votes: 175 },
+            { id: '7', title: 'C++', userId: 'user53', votes: 130 },
+            { id: '8', title: 'C#', userId: 'user54', votes: 125 },
         ],
     },
     {

@@ -9,13 +9,15 @@ const FeaturedRankings: React.FC = () => {
 
     return (
         <>
+        <div className="featured-rankings-container">
             <h2 className="featured-rankings-title">
                 Featured Ranking
             </h2>
+            </div>
             {featuredRankings.map((ranking: any, index: number) => (
                 <Ranking key={index} ranking={ranking} />
             ))}
-        </>
+        </>  
     );
 };
 
