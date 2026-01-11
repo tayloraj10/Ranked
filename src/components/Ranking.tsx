@@ -177,10 +177,10 @@ const Ranking: React.FC<RankingProps> = ({ ranking }) => {
 
     return (
         <div className="ranking-container">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+            <div className="ranking-header">
                 <div>
                     <h3 className="ranking-title">{ranking.title}</h3>
-                    <p className="ranking-subtitle" style={{ fontSize: '1.1rem' }}>
+                    <p className="ranking-subtitle">
                         {hasVoted 
                             ? <span><span style={{ color: 'green' }}>✓</span> You've voted • {ranking.votes.length} total voters</span>
                             : sortView === 'community'
@@ -189,7 +189,7 @@ const Ranking: React.FC<RankingProps> = ({ ranking }) => {
                         }
                     </p>
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.75em' }}>
+                <div className="ranking-controls">
                     <ToggleButtonGroup
                         value={sortView}
                         exclusive
@@ -199,8 +199,8 @@ const Ranking: React.FC<RankingProps> = ({ ranking }) => {
                         sx={{ 
                             width: { xs: '100%', sm: 'auto' },
                             '& .MuiToggleButton-root': {
-                                fontSize: { xs: '0.8rem', sm: '0.875rem' },
-                                padding: { xs: '0.4em 0.8em', sm: '0.5em 1em' }
+                                fontSize: '0.875rem',
+                                padding: { xs: '0.5em 1em', sm: '0.5em 1em' }
                             }
                         }}
                     >
@@ -209,7 +209,7 @@ const Ranking: React.FC<RankingProps> = ({ ranking }) => {
                     </ToggleButtonGroup>
 
                     {!hasVoted && (
-                    <div style={{ textAlign: 'right', marginTop: '1em', width: '100%' }}>
+                    <div className="submit-section">
                         <Button 
                             variant="contained" 
                             color="primary" 
@@ -217,26 +217,23 @@ const Ranking: React.FC<RankingProps> = ({ ranking }) => {
                             onClick={handleSubmit}
                             disabled={sortView !== 'yours'}
                             sx={{ 
-                                padding: { xs: '0.6em 1em', sm: '0.75em 1em' },
-                                fontSize: { xs: '0.9rem', sm: '1rem' },
+                                padding: { xs: '0.65em 1.5em', sm: '0.75em 2em' },
+                                fontSize: { xs: '0.95rem', sm: '1rem' },
                                 fontWeight: 'bold',
                                 width: { xs: '100%', sm: 'auto' }
                             }}
                         >
                             Submit My Rankings
                         </Button>
-                        <p style={{ 
-                            marginTop: '0.5em', 
-                            fontSize: '0.875rem', 
-                            color: 'var(--text-secondary)' 
-                        }}>
-                            1st place = 3 pts • 2nd place = 2 pts • 3rd place = 1 pt
+                        <p className="scoring-info">
+                            <span className="scoring-mobile">1st=3pts • 2nd=2pts • 3rd=1pt</span>
+                            <span className="scoring-desktop">1st place = 3 pts • 2nd place = 2 pts • 3rd place = 1 pt</span>
                         </p>
                     </div>
                     )}
 
                     {hasVoted && sortView === 'yours' && userSubmission && (
-                        <p style={{ margin: 0, fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+                        <p className="user-submission-note">
                             Showing what you submitted.
                         </p>
                     )}
