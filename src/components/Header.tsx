@@ -8,6 +8,7 @@ import { useMediaQuery } from '@mui/material';
 import DrawerButton from './DrawerButton';
 import { useRankingContext } from '../context/RankingContext';
 import type { RankingModel } from '../models/Ranking';
+import { APP_NAME } from '../config/constants';
 
 
 
@@ -46,7 +47,7 @@ const Header: React.FC<HeaderProps> = ({ toggleDrawer }) => {
                 <div className="header-middle">
                     {!isMobile && (
                         <Tooltip title="Go Home">
-                            <div className="brand" onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>Ranked</div>
+                            <div className="brand" onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>{APP_NAME}</div>
                         </Tooltip>
                     )}
                     <Box sx={{ width: isMobile ? '40vw' : '20vw' }}>

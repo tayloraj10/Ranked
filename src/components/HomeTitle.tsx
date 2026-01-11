@@ -1,4 +1,5 @@
 import React from 'react';
+import { APP_NAME, APP_TAGLINE } from '../config/constants';
 
 const HomeTitle: React.FC = () => {
     return (
@@ -15,12 +16,12 @@ const HomeTitle: React.FC = () => {
                 fontSize: '2rem',
                 fontWeight: 'bold',
                 letterSpacing: '0.05em'
-            }}>Welcome to Ranked</h1>
+            }}>Welcome to {APP_NAME}</h1>
             <p style={{
                 margin: '0',
                 fontSize: '1rem',
                 fontWeight: '500'
-            }}>Your one-stop platform for ranking everything!</p>
+            }}>{APP_TAGLINE}</p>
         </div>
     );
 };
