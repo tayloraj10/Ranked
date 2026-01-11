@@ -1,5 +1,3 @@
-config
-
 # Firebase
 .firebase/
 .firebaserc
