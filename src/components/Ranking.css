@@ -53,6 +53,19 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
+.ranking-option.drag-disabled {
+    cursor: default;
+}
+
+.ranking-option.drag-disabled:hover {
+    transform: none;
+}
+
+.ranking-option.top-three {
+    border-width: 3px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
 [data-theme='dark'] .ranking-option {
     background: #3a3a3a;
     border-color: #4a4a4a;

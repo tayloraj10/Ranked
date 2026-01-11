@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import './Ranking.css';
 import SortableItem from './SortableItem';
-import type { RankingModel } from '../models/Ranking';
+import type { RankingModel, UserSubmission, RankedOption } from '../models/Ranking';
+import { useRankingContext } from '../context/RankingContext';
+import { getSortedOptions, hasUserVoted } from '../utils/scoringUtils';
 import {
     DndContext,
     closestCenter,
@@ -18,18 +20,78 @@ import {
     sortableKeyboardCoordinates,
     verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
+import { Button, Alert, Snackbar, ToggleButton, ToggleButtonGroup } from '@mui/material';
 
 interface RankingProps {
     ranking: RankingModel;
 }
 
+type SortView = 'yours' | 'community';
+
 
 const Ranking: React.FC<RankingProps> = ({ ranking }) => {
-    const [options, setOptions] = useState(ranking.options);
+    const { submitRanking, currentUserId } = useRankingContext();
+    const [sortView, setSortView] = useState<SortView>('community');
+    const [draftOptions, setDraftOptions] = useState(ranking.options);
+    const [displayOptions, setDisplayOptions] = useState(ranking.options);
+    const [hasVoted, setHasVoted] = useState(false);
+    const [showSuccess, setShowSuccess] = useState(false);
+    const [showError, setShowError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const userSubmission = ranking.submissions.find(s => s.userId === currentUserId);
+
+    const buildUserOrder = (): typeof ranking.options => {
+        if (!userSubmission) return draftOptions;
+
+        const topIds = [...userSubmission.rankedOptions]
+            .sort((a, b) => a.position - b.position)
+            .map(ro => ro.optionId);
+
+        const byId = new Map(ranking.options.map(o => [o.id, o] as const));
+        const top = topIds.map(id => byId.get(id)).filter(Boolean) as typeof ranking.options;
+        const remaining = ranking.options.filter(o => !topIds.includes(o.id));
+        return [...top, ...remaining];
+    };
+
+    const syncDisplayOptions = (nextSortView: SortView, nextHasVoted: boolean) => {
+        if (nextSortView === 'community') {
+            setDisplayOptions(getSortedOptions(ranking.options));
+            return;
+        }
+
+        if (nextHasVoted) {
+            setDisplayOptions(buildUserOrder());
+            return;
+        }
+
+        setDisplayOptions(draftOptions);
+    };
 
     useEffect(() => {
-        setOptions(ranking.options);
-    }, [ranking.id]);
+        // Reset per-ranking state
+        const nextHasVoted = hasUserVoted(ranking, currentUserId);
+        setHasVoted(nextHasVoted);
+        setDraftOptions(ranking.options);
+
+        // Default view: show community results first.
+        const nextSortView: SortView = 'community';
+        setSortView(nextSortView);
+
+        // Show the right list on load
+        if (nextSortView === 'community') {
+            setDisplayOptions(getSortedOptions(ranking.options));
+        } else {
+            setDisplayOptions(nextHasVoted ? buildUserOrder() : ranking.options);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ranking.id, currentUserId]);
+
+    useEffect(() => {
+        // When scores change (after submissions), refresh what we're showing.
+        syncDisplayOptions(sortView, hasVoted);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ranking.options, ranking.submissions, sortView, hasVoted]);
 
     const sensors = useSensors(
         useSensor(PointerSensor, {
@@ -49,43 +111,188 @@ const Ranking: React.FC<RankingProps> = ({ ranking }) => {
     );
 
     const handleDragEnd = (event: DragEndEvent) => {
+        if (hasVoted || sortView !== 'yours') return;
         const { active, over } = event;
 
         if (over && active.id !== over.id) {
-            setOptions((items) => {
+            setDraftOptions((items) => {
                 const oldIndex = items.findIndex((item) => item.id === active.id);
                 const newIndex = items.findIndex((item) => item.id === over.id);
-                return arrayMove(items, oldIndex, newIndex);
+                const updated = arrayMove(items, oldIndex, newIndex);
+                setDisplayOptions(updated);
+                return updated;
             });
         }
     };
 
+    const handleSubmit = () => {
+        if (sortView !== 'yours') {
+            setErrorMessage('Switch to “Your ranking” to submit.');
+            setShowError(true);
+            return;
+        }
+
+        // Only take top 3 ranked items
+        const top3 = draftOptions.slice(0, 3);
+        
+        if (top3.length === 0) {
+            setErrorMessage('Please rank at least one option');
+            setShowError(true);
+            return;
+        }
+
+        const rankedOptions: RankedOption[] = top3.map((option, index) => ({
+            optionId: option.id,
+            position: index + 1, // 1st, 2nd, 3rd
+        }));
+
+        const submission: UserSubmission = {
+            id: `submission_${Date.now()}`,
+            userId: currentUserId,
+            rankingId: ranking.id,
+            rankedOptions,
+            submittedAt: new Date(),
+        };
+
+        const success = submitRanking(ranking.id, submission);
+        
+        if (success) {
+            setShowSuccess(true);
+            setHasVoted(true);
+            setSortView('community');
+            syncDisplayOptions('community', true);
+        } else {
+            setErrorMessage('Failed to submit ranking. You may have already voted.');
+            setShowError(true);
+        }
+    };
+
+    const handleSortViewChange = (_event: React.MouseEvent<HTMLElement>, value: SortView | null) => {
+        if (!value) return;
+        setSortView(value);
+        syncDisplayOptions(value, hasVoted);
+    };
+
+    const dragDisabled = hasVoted || sortView !== 'yours';
+
     return (
         <div className="ranking-container">
-            <h3 className="ranking-title">{ranking.title}</h3>
-            <p className="ranking-subtitle">Drag to reorder • {ranking.votes.length} total voters</p>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                <div>
+                    <h3 className="ranking-title">{ranking.title}</h3>
+                    <p className="ranking-subtitle" style={{ fontSize: '1.1rem' }}>
+                        {hasVoted 
+                            ? <span><span style={{ color: 'green' }}>✓</span> You've voted • {ranking.votes.length} total voters</span>
+                            : sortView === 'community'
+                                ? `Switch to "Your ranking" to vote • ${ranking.votes.length} voters`
+                                : `Drag to rank your top 3 • ${ranking.votes.length} voters`
+                        }
+                    </p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.75em' }}>
+                    <ToggleButtonGroup
+                        value={sortView}
+                        exclusive
+                        onChange={handleSortViewChange}
+                        size="small"
+                        color="primary"
+                        sx={{ 
+                            width: { xs: '100%', sm: 'auto' },
+                            '& .MuiToggleButton-root': {
+                                fontSize: { xs: '0.8rem', sm: '0.875rem' },
+                                padding: { xs: '0.4em 0.8em', sm: '0.5em 1em' }
+                            }
+                        }}
+                    >
+                        <ToggleButton value="yours">Your ranking</ToggleButton>
+                        <ToggleButton value="community">Community</ToggleButton>
+                    </ToggleButtonGroup>
+
+                    {!hasVoted && (
+                    <div style={{ textAlign: 'right', marginTop: '1em', width: '100%' }}>
+                        <Button 
+                            variant="contained" 
+                            color="primary" 
+                            size="large"
+                            onClick={handleSubmit}
+                            disabled={sortView !== 'yours'}
+                            sx={{ 
+                                padding: { xs: '0.6em 1em', sm: '0.75em 1em' },
+                                fontSize: { xs: '0.9rem', sm: '1rem' },
+                                fontWeight: 'bold',
+                                width: { xs: '100%', sm: 'auto' }
+                            }}
+                        >
+                            Submit My Rankings
+                        </Button>
+                        <p style={{ 
+                            marginTop: '0.5em', 
+                            fontSize: '0.875rem', 
+                            color: 'var(--text-secondary)' 
+                        }}>
+                            1st place = 3 pts • 2nd place = 2 pts • 3rd place = 1 pt
+                        </p>
+                    </div>
+                    )}
+
+                    {hasVoted && sortView === 'yours' && userSubmission && (
+                        <p style={{ margin: 0, fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+                            Showing what you submitted.
+                        </p>
+                    )}
+                </div>
+            </div>
+            
             <DndContext
                 sensors={sensors}
                 collisionDetection={closestCenter}
                 onDragEnd={handleDragEnd}
             >
                 <SortableContext
-                    items={options.map((option) => option.id)}
+                    items={displayOptions.map((option) => option.id)}
                     strategy={verticalListSortingStrategy}
                 >
                     <div className="ranking-options">
-                        {options.map((option, index) => (
+                        {displayOptions.map((option, index) => (
                             <SortableItem
                                 key={option.id}
                                 id={option.id}
                                 title={option.title}
-                                votes={option.votes}
                                 rank={index + 1}
+                                totalScore={option.totalScore}
+                                submissionCount={option.submissionCount}
+                                firstPlaceCount={option.firstPlaceCount}
+                                secondPlaceCount={option.secondPlaceCount}
+                                thirdPlaceCount={option.thirdPlaceCount}
+                                isTopThree={index < 3}
+                                dragDisabled={dragDisabled}
                             />
                         ))}
                     </div>
                 </SortableContext>
             </DndContext>
+
+            <Snackbar 
+                open={showSuccess} 
+                autoHideDuration={4000} 
+                onClose={() => setShowSuccess(false)}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            >
+                <Alert onClose={() => setShowSuccess(false)} severity="success" sx={{ width: '100%' }}>
+                    Your rankings have been submitted!
+                </Alert>
+            </Snackbar>
+
+            <Snackbar 
+                open={showError} 
+                autoHideDuration={4000} 
+                onClose={() => setShowError(false)}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            >
+                <Alert onClose={() => setShowError(false)} severity="error" sx={{ width: '100%' }}>
+                    {errorMessage}
+                </Alert>
+            </Snackbar>
         </div>
     );
 };
