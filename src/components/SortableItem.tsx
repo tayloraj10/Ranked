@@ -16,6 +16,7 @@ interface SortableItemProps {
     isTopThree: boolean;
     dragDisabled: boolean;
     dragHandleOnly?: boolean;
+    sortView: 'yours' | 'community';
 }
 
 const SortableItem: React.FC<SortableItemProps> = ({ 
@@ -30,6 +31,7 @@ const SortableItem: React.FC<SortableItemProps> = ({
     isTopThree,
     dragDisabled,
     dragHandleOnly = false,
+    sortView,
 }) => {
     const {
         attributes,
@@ -47,7 +49,9 @@ const SortableItem: React.FC<SortableItemProps> = ({
     };
 
     const getRankBadgeStyle = () => {
-        if (!isTopThree) return {};
+        // Show colors in "yours" view or when there are actual submissions in "community" view
+        if (!isTopThree && sortView !== 'yours') return {};
+        if (sortView !== 'yours' && rank > 3) return {};
         
         switch(rank) {
             case 1:
@@ -90,10 +94,10 @@ const SortableItem: React.FC<SortableItemProps> = ({
             {...(!dragDisabled && !dragHandleOnly ? { ...attributes, ...listeners } : {})}
         >
             <div className="rank-badge" style={getRankBadgeStyle()}>
-                {rank === 1 && <FaTrophy className="trophy-icon" />}
-                {rank === 2 && <FaMedal className="trophy-icon" />}
-                {rank === 3 && <FaMedal className="trophy-icon" />}
-                <span className="rank-number">#{rank}</span>
+                {(isTopThree || (sortView === 'yours' && rank === 1)) && rank === 1 && <FaTrophy className="trophy-icon" />}
+                {(isTopThree || (sortView === 'yours' && rank === 2)) && rank === 2 && <FaMedal className="trophy-icon" />}
+                {(isTopThree || (sortView === 'yours' && rank === 3)) && rank === 3 && <FaMedal className="trophy-icon" />}
+                <span className="rank-number">{submissionCount > 0 || sortView === 'yours' ? `#${rank}` : '-'}</span>
             </div>
             <div className="option-content">
                 <div className="option-title">{title}</div>

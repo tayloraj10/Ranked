@@ -9,6 +9,13 @@ export interface OptionModel {
     thirdPlaceCount: number;
 }
 
+export interface OptionSuggestion {
+    id: string; // Unique identifier for the suggestion
+    optionTitle: string; // Title of the suggested option
+    userId: string; // ID of the user who suggested
+    submittedAt: Date; // When the suggestion was made
+}
+
 export interface RankingModel {
     id: string; // Unique identifier for the ranking
     title: string; // Title of the ranking
@@ -17,6 +24,7 @@ export interface RankingModel {
     lastVoted: Date; // Optional timestamp of the last vote
     votes: string[]; // Array of user IDs who have voted in this ranking
     submissions: UserSubmission[]; // All user submissions for this ranking
+    suggestions: OptionSuggestion[]; // User-suggested options
 }
 
 export interface UserSubmission {

@@ -43,6 +43,13 @@
     display: inline;
 }
 
+.user-submission-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
 .user-submission-note {
     margin: 0;
     font-size: 0.875rem;

@@ -48,6 +48,7 @@ export const sampleRankings: RankingModel[] = [
             { id: '2', title: 'Movie B', userId: 'user2', totalScore: 6, submissionCount: 3, firstPlaceCount: 1, secondPlaceCount: 1, thirdPlaceCount: 1 },
             { id: '3', title: 'Movie C', userId: 'user3', totalScore: 4, submissionCount: 3, firstPlaceCount: 0, secondPlaceCount: 1, thirdPlaceCount: 2 },
         ],
+        suggestions: []
     },
     {
         id: '2',
@@ -111,6 +112,7 @@ export const sampleRankings: RankingModel[] = [
             { id: '7', title: 'C++', userId: 'user53', totalScore: 0, submissionCount: 0, firstPlaceCount: 0, secondPlaceCount: 0, thirdPlaceCount: 0 },
             { id: '8', title: 'C#', userId: 'user54', totalScore: 0, submissionCount: 0, firstPlaceCount: 0, secondPlaceCount: 0, thirdPlaceCount: 0 },
         ],
+        suggestions: []
     },
     {
         id: '3',
@@ -147,6 +149,7 @@ export const sampleRankings: RankingModel[] = [
             { id: '2', title: 'Book Y', userId: 'user8', totalScore: 5, submissionCount: 2, firstPlaceCount: 1, secondPlaceCount: 1, thirdPlaceCount: 0 },
             { id: '3', title: 'Book Z', userId: 'user9', totalScore: 2, submissionCount: 2, firstPlaceCount: 0, secondPlaceCount: 0, thirdPlaceCount: 2 },
         ],
+        suggestions: []
     },
     {
         id: '4',
@@ -195,6 +198,7 @@ export const sampleRankings: RankingModel[] = [
             { id: '3', title: 'Extra Cheese', userId: 'user12', totalScore: 5, submissionCount: 2, firstPlaceCount: 1, secondPlaceCount: 1, thirdPlaceCount: 0 },
             { id: '4', title: 'Pineapple', userId: 'user13', totalScore: 1, submissionCount: 1, firstPlaceCount: 0, secondPlaceCount: 0, thirdPlaceCount: 1 },
         ],
+        suggestions: []
     },
     {
         id: '5',
@@ -243,6 +247,7 @@ export const sampleRankings: RankingModel[] = [
             { id: '3', title: 'Tokyo', userId: 'user16', totalScore: 5, submissionCount: 2, firstPlaceCount: 1, secondPlaceCount: 1, thirdPlaceCount: 0 },
             { id: '4', title: 'New York', userId: 'user17', totalScore: 1, submissionCount: 1, firstPlaceCount: 0, secondPlaceCount: 0, thirdPlaceCount: 1 },
         ],
+        suggestions: []
     },
     {
         id: '6',
@@ -280,6 +285,7 @@ export const sampleRankings: RankingModel[] = [
             { id: '3', title: 'Strategy', userId: 'user20', totalScore: 1, submissionCount: 1, firstPlaceCount: 0, secondPlaceCount: 0, thirdPlaceCount: 1 },
             { id: '4', title: 'Puzzle', userId: 'user21', totalScore: 1, submissionCount: 1, firstPlaceCount: 0, secondPlaceCount: 0, thirdPlaceCount: 1 },
         ],
+        suggestions: []
     },
     {
         id: '7',
@@ -317,6 +323,7 @@ export const sampleRankings: RankingModel[] = [
             { id: '3', title: 'Latte', userId: 'user24', totalScore: 5, submissionCount: 2, firstPlaceCount: 1, secondPlaceCount: 1, thirdPlaceCount: 0 },
             { id: '4', title: 'Americano', userId: 'user25', totalScore: 1, submissionCount: 1, firstPlaceCount: 0, secondPlaceCount: 0, thirdPlaceCount: 1 },
         ],
+        suggestions: []
     },
     {
         id: '8',
@@ -365,6 +372,7 @@ export const sampleRankings: RankingModel[] = [
             { id: '3', title: 'HBO Max', userId: 'user28', totalScore: 1, submissionCount: 1, firstPlaceCount: 0, secondPlaceCount: 0, thirdPlaceCount: 1 },
             { id: '4', title: 'Amazon Prime', userId: 'user29', totalScore: 4, submissionCount: 2, firstPlaceCount: 0, secondPlaceCount: 2, thirdPlaceCount: 0 },
         ],
+        suggestions: []
     },
     {
         id: '9',
@@ -402,6 +410,7 @@ export const sampleRankings: RankingModel[] = [
             { id: '3', title: 'Yoga', userId: 'user32', totalScore: 4, submissionCount: 2, firstPlaceCount: 1, secondPlaceCount: 0, thirdPlaceCount: 1 },
             { id: '4', title: 'Swimming', userId: 'user33', totalScore: 2, submissionCount: 1, firstPlaceCount: 0, secondPlaceCount: 1, thirdPlaceCount: 0 },
         ],
+        suggestions: []
     },
     {
         id: '10',
@@ -439,6 +448,7 @@ export const sampleRankings: RankingModel[] = [
             { id: '3', title: 'Jazz', userId: 'user36', totalScore: 0, submissionCount: 0, firstPlaceCount: 0, secondPlaceCount: 0, thirdPlaceCount: 0 },
             { id: '4', title: 'Electronic', userId: 'user37', totalScore: 3, submissionCount: 2, firstPlaceCount: 0, secondPlaceCount: 1, thirdPlaceCount: 1 },
         ],
+        suggestions: []
     },
     {
         id: '11',
@@ -476,6 +486,7 @@ export const sampleRankings: RankingModel[] = [
             { id: '3', title: 'TikTok', userId: 'user40', totalScore: 5, submissionCount: 2, firstPlaceCount: 1, secondPlaceCount: 1, thirdPlaceCount: 0 },
             { id: '4', title: 'LinkedIn', userId: 'user41', totalScore: 1, submissionCount: 1, firstPlaceCount: 0, secondPlaceCount: 0, thirdPlaceCount: 1 },
         ],
+        suggestions: []
     },
     {
         id: '12',
@@ -513,6 +524,7 @@ export const sampleRankings: RankingModel[] = [
             { id: '3', title: 'Cereal', userId: 'user44', totalScore: 1, submissionCount: 1, firstPlaceCount: 0, secondPlaceCount: 0, thirdPlaceCount: 1 },
             { id: '4', title: 'Avocado Toast', userId: 'user45', totalScore: 1, submissionCount: 1, firstPlaceCount: 0, secondPlaceCount: 0, thirdPlaceCount: 1 },
         ],
+        suggestions: []
     },
     {
         id: '13',
@@ -561,5 +573,6 @@ export const sampleRankings: RankingModel[] = [
             { id: '3', title: 'BMW', userId: 'user48', totalScore: 1, submissionCount: 1, firstPlaceCount: 0, secondPlaceCount: 0, thirdPlaceCount: 1 },
             { id: '4', title: 'Honda', userId: 'user49', totalScore: 3, submissionCount: 2, firstPlaceCount: 0, secondPlaceCount: 1, thirdPlaceCount: 1 },
         ],
+        suggestions: []
     },
 ];
