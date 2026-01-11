@@ -253,7 +253,6 @@ const Ranking: React.FC<RankingProps> = ({ ranking }) => {
                         {displayOptions.map((option, index) => {
                             // Calculate actual rank considering ties
                             let actualRank = index + 1;
-                            let isTied = false;
                             
                             if (sortView === 'community' && index > 0) {
                                 const prevOption = displayOptions[index - 1];
@@ -273,7 +272,6 @@ const Ranking: React.FC<RankingProps> = ({ ranking }) => {
                                         }
                                     }
                                     actualRank = tieStartIndex + 1;
-                                    isTied = actualRank <= 3; // Only show "tied" for top 3
                                 }
                             }
                             
@@ -290,7 +288,6 @@ const Ranking: React.FC<RankingProps> = ({ ranking }) => {
                                     thirdPlaceCount={option.thirdPlaceCount}
                                     isTopThree={actualRank <= 3}
                                     dragDisabled={dragDisabled}
-                                    isTied={isTied}
                                 />
                             );
                         })}

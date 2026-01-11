@@ -15,7 +15,6 @@ interface SortableItemProps {
     thirdPlaceCount: number;
     isTopThree: boolean;
     dragDisabled: boolean;
-    isTied?: boolean;
 }
 
 const SortableItem: React.FC<SortableItemProps> = ({ 
@@ -29,7 +28,6 @@ const SortableItem: React.FC<SortableItemProps> = ({
     thirdPlaceCount,
     isTopThree,
     dragDisabled,
-    isTied = false
 }) => {
     const {
         attributes,
