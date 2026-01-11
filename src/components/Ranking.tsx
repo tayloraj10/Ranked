@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import './Ranking.css';
 import SortableItem from './SortableItem';
+import { SuggestionForm } from './SuggestionForm';
+import { SuggestionList } from './SuggestionList';
 import type { RankingModel, UserSubmission, RankedOption } from '../models/Ranking';
 import { useRankingContext } from '../context/RankingContext';
 import { getSortedOptions, hasUserVoted } from '../utils/scoringUtils';
+import { submitSuggestion } from '../services/firestoreService';
 import {
     DndContext,
     closestCenter,
@@ -315,6 +318,12 @@ const Ranking: React.FC<RankingProps> = ({ ranking }) => {
                     </div>
                 </SortableContext>
             </DndContext>
+
+            <SuggestionList suggestions={ranking.suggestions || []} />
+
+            <SuggestionForm onSubmit={async (optionTitle) => {
+                return await submitSuggestion(ranking.id, currentUserId, optionTitle);
+            }} />
 
             <Snackbar 
                 open={showSuccess} 
