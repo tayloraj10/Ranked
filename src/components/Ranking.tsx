@@ -33,7 +33,7 @@ type SortView = 'yours' | 'community';
 
 
 const Ranking: React.FC<RankingProps> = ({ ranking }) => {
-    const { submitRanking, deleteSubmission, currentUserId } = useRankingContext();
+    const { submitRanking, deleteSubmission, refreshRankings, currentUserId } = useRankingContext();
     const [sortView, setSortView] = useState<SortView>('community');
     const [draftOptions, setDraftOptions] = useState(ranking.options);
     const [displayOptions, setDisplayOptions] = useState(ranking.options);
@@ -363,7 +363,12 @@ const Ranking: React.FC<RankingProps> = ({ ranking }) => {
             <SuggestionList suggestions={ranking.suggestions || []} />
 
             <SuggestionForm onSubmit={async (optionTitle) => {
-                return await submitSuggestion(ranking.id, currentUserId, optionTitle);
+                const success = await submitSuggestion(ranking.id, currentUserId, optionTitle);
+                if (success) {
+                    // Refresh rankings to show the new suggestion
+                    await refreshRankings();
+                }
+                return success;
             }} />
 
             <Snackbar 

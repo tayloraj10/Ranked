@@ -10,6 +10,7 @@ interface RankingContextValue {
     setRankings: React.Dispatch<React.SetStateAction<RankingModel[]>>;
     submitRanking: (rankingId: string, submission: UserSubmission) => Promise<boolean>;
     deleteSubmission: (rankingId: string) => Promise<boolean>;
+    refreshRankings: () => Promise<void>;
     currentUserId: string;
 }
 
@@ -109,6 +110,15 @@ export const RankingProvider: React.FC<{ children: React.ReactNode }> = ({ child
         }
     };
 
+    const refreshRankings = async (): Promise<void> => {
+        try {
+            const updatedRankings = await fetchFromFirestore();
+            setRankings(updatedRankings);
+        } catch (error) {
+            console.error('Error refreshing rankings:', error);
+        }
+    };
+
     if (isLoading) {
         return (
             <div style={{
@@ -151,7 +161,7 @@ export const RankingProvider: React.FC<{ children: React.ReactNode }> = ({ child
     }
 
     return (
-        <RankingContext.Provider value={{ rankings, setRankings, submitRanking, deleteSubmission, currentUserId }}>
+        <RankingContext.Provider value={{ rankings, setRankings, submitRanking, deleteSubmission, refreshRankings, currentUserId }}>
             {children}
         </RankingContext.Provider>
     );
