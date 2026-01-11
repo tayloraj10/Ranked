@@ -30,7 +30,18 @@ const Sidebar: React.FC<SidebarProps> = ({ isDrawerOpen, toggleDrawer }) => {
             return b.secondPlaceCount - a.secondPlaceCount;
         });
         
-        return sorted[0];
+        const topOption = sorted[0];
+        const tiedWinners = sorted.filter(opt => 
+            opt.totalScore === topOption.totalScore &&
+            opt.firstPlaceCount === topOption.firstPlaceCount &&
+            opt.secondPlaceCount === topOption.secondPlaceCount
+        );
+        
+        return {
+            isTied: tiedWinners.length > 1,
+            winners: tiedWinners,
+            topScore: topOption.totalScore
+        };
     };
 
     return (
@@ -57,9 +68,22 @@ const Sidebar: React.FC<SidebarProps> = ({ isDrawerOpen, toggleDrawer }) => {
                                     </a>
                                     <div className="sidebar-meta">
                                         {winner && (
-                                            <Tooltip title={`Leading with ${winner.totalScore} points`} arrow>
+                                            <Tooltip 
+                                                title={
+                                                    winner.isTied 
+                                                        ? `Tied for 1st with ${winner.topScore} points`
+                                                        : `Leading with ${winner.topScore} points`
+                                                } 
+                                                arrow
+                                            >
                                                 <div className="winning-badge">
-                                                    <FaTrophy /> <span>{winner.title}</span>
+                                                    <FaTrophy /> 
+                                                    <span>
+                                                        {winner.isTied 
+                                                            ? `${winner.winners.length}-way tie`
+                                                            : winner.winners[0].title
+                                                        }
+                                                    </span>
                                                 </div>
                                             </Tooltip>
                                         )}
