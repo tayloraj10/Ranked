@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useRankingContext } from '../context/RankingContext';
 import Drawer from '@mui/material/Drawer';
 import './Sidebar.css';
@@ -12,6 +13,12 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ isDrawerOpen, toggleDrawer }) => {
     const { rankings } = useRankingContext();
+    const navigate = useNavigate();
+
+    const handleRankingClick = (rankingId: string) => {
+        navigate(`/ranking/${rankingId}`);
+        toggleDrawer(false)({} as React.MouseEvent);
+    };
 
     return (
         <Drawer anchor="left" open={isDrawerOpen} onClose={toggleDrawer(false)}>
@@ -23,7 +30,16 @@ const Sidebar: React.FC<SidebarProps> = ({ isDrawerOpen, toggleDrawer }) => {
                         .slice(0, 10)
                         .map((ranking) => (
                             <li key={ranking.id} className="sidebar-list-item">
-                                <a href="#" className="sidebar-link">{ranking.title}</a>
+                                <a 
+                                    href="#" 
+                                    className="sidebar-link"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        handleRankingClick(ranking.id);
+                                    }}
+                                >
+                                    {ranking.title}
+                                </a>
                                 <div className="votes-badge">
                                     <FaVoteYea /> <span>{ranking.votes?.length || 0}</span>
                                 </div>

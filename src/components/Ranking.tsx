@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Ranking.css';
 import SortableItem from './SortableItem';
 import type { RankingModel } from '../models/Ranking';
@@ -26,6 +26,10 @@ interface RankingProps {
 
 const Ranking: React.FC<RankingProps> = ({ ranking }) => {
     const [options, setOptions] = useState(ranking.options);
+
+    useEffect(() => {
+        setOptions(ranking.options);
+    }, [ranking.id]);
 
     const sensors = useSensors(
         useSensor(PointerSensor, {

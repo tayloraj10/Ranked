@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
 import MainContent from '../components/MainContent';
@@ -7,6 +8,7 @@ import HomeTitle from '../components/HomeTitle';
 
 const Home: React.FC = () => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+    const { id } = useParams<{ id?: string }>();
 
     const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
         if (
@@ -21,7 +23,7 @@ const Home: React.FC = () => {
     return (
         <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
             <Header toggleDrawer={toggleDrawer} />
-            <HomeTitle />
+            {!id && <HomeTitle />}
             <div style={{ display: 'flex', flexGrow: 1 }}>
                 <Sidebar isDrawerOpen={isDrawerOpen} toggleDrawer={toggleDrawer} />
                 <MainContent />

@@ -14,8 +14,8 @@ const FeaturedRankings: React.FC = () => {
                 Featured Ranking
             </h2>
             </div>
-            {featuredRankings.map((ranking: any, index: number) => (
-                <Ranking key={index} ranking={ranking} />
+            {featuredRankings.map((ranking: any) => (
+                <Ranking key={ranking.id} ranking={ranking} />
             ))}
         </>  
     );
