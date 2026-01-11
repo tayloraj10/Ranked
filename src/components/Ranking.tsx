@@ -250,21 +250,50 @@ const Ranking: React.FC<RankingProps> = ({ ranking }) => {
                     strategy={verticalListSortingStrategy}
                 >
                     <div className="ranking-options">
-                        {displayOptions.map((option, index) => (
-                            <SortableItem
-                                key={option.id}
-                                id={option.id}
-                                title={option.title}
-                                rank={index + 1}
-                                totalScore={option.totalScore}
-                                submissionCount={option.submissionCount}
-                                firstPlaceCount={option.firstPlaceCount}
-                                secondPlaceCount={option.secondPlaceCount}
-                                thirdPlaceCount={option.thirdPlaceCount}
-                                isTopThree={index < 3}
-                                dragDisabled={dragDisabled}
-                            />
-                        ))}
+                        {displayOptions.map((option, index) => {
+                            // Calculate actual rank considering ties
+                            let actualRank = index + 1;
+                            let isTied = false;
+                            
+                            if (sortView === 'community' && index > 0) {
+                                const prevOption = displayOptions[index - 1];
+                                if (prevOption.totalScore === option.totalScore &&
+                                    prevOption.firstPlaceCount === option.firstPlaceCount &&
+                                    prevOption.secondPlaceCount === option.secondPlaceCount) {
+                                    // Find the rank of the first item in this tie group
+                                    let tieStartIndex = index - 1;
+                                    while (tieStartIndex > 0) {
+                                        const evenEarlier = displayOptions[tieStartIndex - 1];
+                                        if (evenEarlier.totalScore === option.totalScore &&
+                                            evenEarlier.firstPlaceCount === option.firstPlaceCount &&
+                                            evenEarlier.secondPlaceCount === option.secondPlaceCount) {
+                                            tieStartIndex--;
+                                        } else {
+                                            break;
+                                        }
+                                    }
+                                    actualRank = tieStartIndex + 1;
+                                    isTied = actualRank <= 3; // Only show "tied" for top 3
+                                }
+                            }
+                            
+                            return (
+                                <SortableItem
+                                    key={option.id}
+                                    id={option.id}
+                                    title={option.title}
+                                    rank={actualRank}
+                                    totalScore={option.totalScore}
+                                    submissionCount={option.submissionCount}
+                                    firstPlaceCount={option.firstPlaceCount}
+                                    secondPlaceCount={option.secondPlaceCount}
+                                    thirdPlaceCount={option.thirdPlaceCount}
+                                    isTopThree={actualRank <= 3}
+                                    dragDisabled={dragDisabled}
+                                    isTied={isTied}
+                                />
+                            );
+                        })}
                     </div>
                 </SortableContext>
             </DndContext>

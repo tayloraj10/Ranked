@@ -94,8 +94,9 @@
         transform 0.2s,
         box-shadow 0.2s;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5em;
 }
 
 .sidebar-list-item:hover {
@@ -116,10 +117,37 @@
     text-decoration: none;
     color: #007bff;
     font-weight: bold;
+    word-break: break-word;
+    line-height: 1.4;
 }
 
 .sidebar-link:hover {
     color: #0056b3;
+}
+
+.sidebar-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    align-items: center;
+}
+
+.winning-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25em;
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 0.25em 0.75em;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.85em;
+    width: fit-content;
+}
+
+[data-theme='dark'] .winning-badge {
+    background-color: #554d1e;
+    color: #ffd700;
 }
 
 .votes-badge {
@@ -132,7 +160,6 @@
     border-radius: 12px;
     font-weight: 600;
     font-size: 0.9em;
-    margin-top: 0.5em;
     width: fit-content;
 }
 
