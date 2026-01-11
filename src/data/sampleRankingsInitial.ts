@@ -11,8 +11,7 @@ export const sampleRankingsInitial: RankingModel[] = [
         featured: false,
         lastVoted: new Date(),
         votes: [],
-        submissions: [],
-        options: [
+        submissions: [],        suggestions: [],        options: [
             { id: '1', title: 'The Shawshank Redemption', userId: 'user1', totalScore: 0, submissionCount: 0, firstPlaceCount: 0, secondPlaceCount: 0, thirdPlaceCount: 0 },
             { id: '2', title: 'The Godfather', userId: 'user2', totalScore: 0, submissionCount: 0, firstPlaceCount: 0, secondPlaceCount: 0, thirdPlaceCount: 0 },
             { id: '3', title: 'The Dark Knight', userId: 'user3', totalScore: 0, submissionCount: 0, firstPlaceCount: 0, secondPlaceCount: 0, thirdPlaceCount: 0 },
@@ -29,6 +28,7 @@ export const sampleRankingsInitial: RankingModel[] = [
         lastVoted: new Date(),
         votes: [],
         submissions: [],
+        suggestions: [],
         options: [
             { id: '1', title: 'JavaScript', userId: 'user4', totalScore: 0, submissionCount: 0, firstPlaceCount: 0, secondPlaceCount: 0, thirdPlaceCount: 0 },
             { id: '2', title: 'Python', userId: 'user5', totalScore: 0, submissionCount: 0, firstPlaceCount: 0, secondPlaceCount: 0, thirdPlaceCount: 0 },
@@ -47,6 +47,7 @@ export const sampleRankingsInitial: RankingModel[] = [
         lastVoted: new Date(),
         votes: [],
         submissions: [],
+        suggestions: [],
         options: [
             { id: '1', title: 'To Kill a Mockingbird', userId: 'user7', totalScore: 0, submissionCount: 0, firstPlaceCount: 0, secondPlaceCount: 0, thirdPlaceCount: 0 },
             { id: '2', title: '1984', userId: 'user8', totalScore: 0, submissionCount: 0, firstPlaceCount: 0, secondPlaceCount: 0, thirdPlaceCount: 0 },
@@ -63,6 +64,7 @@ export const sampleRankingsInitial: RankingModel[] = [
         lastVoted: new Date(),
         votes: [],
         submissions: [],
+        suggestions: [],
         options: [
             { id: '1', title: 'Pepperoni', userId: 'user10', totalScore: 0, submissionCount: 0, firstPlaceCount: 0, secondPlaceCount: 0, thirdPlaceCount: 0 },
             { id: '2', title: 'Mushrooms', userId: 'user11', totalScore: 0, submissionCount: 0, firstPlaceCount: 0, secondPlaceCount: 0, thirdPlaceCount: 0 },
@@ -77,6 +79,7 @@ export const sampleRankingsInitial: RankingModel[] = [
         lastVoted: new Date(),
         votes: [],
         submissions: [],
+        suggestions: [],
         options: [
             { id: '1', title: 'Bali', userId: 'user14', totalScore: 0, submissionCount: 0, firstPlaceCount: 0, secondPlaceCount: 0, thirdPlaceCount: 0 },
             { id: '2', title: 'Paris', userId: 'user15', totalScore: 0, submissionCount: 0, firstPlaceCount: 0, secondPlaceCount: 0, thirdPlaceCount: 0 },
@@ -91,6 +94,7 @@ export const sampleRankingsInitial: RankingModel[] = [
         lastVoted: new Date(),
         votes: [],
         submissions: [],
+        suggestions: [],
         options: [
             { id: '1', title: 'RPG', userId: 'user18', totalScore: 0, submissionCount: 0, firstPlaceCount: 0, secondPlaceCount: 0, thirdPlaceCount: 0 },
             { id: '2', title: 'FPS', userId: 'user19', totalScore: 0, submissionCount: 0, firstPlaceCount: 0, secondPlaceCount: 0, thirdPlaceCount: 0 },
@@ -109,6 +113,7 @@ export const sampleRankingsInitial: RankingModel[] = [
         lastVoted: new Date(),
         votes: [],
         submissions: [],
+        suggestions: [],
         options: [
             { id: '1', title: 'Espresso', userId: 'user22', totalScore: 0, submissionCount: 0, firstPlaceCount: 0, secondPlaceCount: 0, thirdPlaceCount: 0 },
             { id: '2', title: 'Cappuccino', userId: 'user23', totalScore: 0, submissionCount: 0, firstPlaceCount: 0, secondPlaceCount: 0, thirdPlaceCount: 0 },
@@ -123,6 +128,7 @@ export const sampleRankingsInitial: RankingModel[] = [
         lastVoted: new Date(),
         votes: [],
         submissions: [],
+        suggestions: [],
         options: [
             { id: '1', title: 'Netflix', userId: 'user26', totalScore: 0, submissionCount: 0, firstPlaceCount: 0, secondPlaceCount: 0, thirdPlaceCount: 0 },
             { id: '2', title: 'Disney+', userId: 'user27', totalScore: 0, submissionCount: 0, firstPlaceCount: 0, secondPlaceCount: 0, thirdPlaceCount: 0 },
@@ -137,6 +143,7 @@ export const sampleRankingsInitial: RankingModel[] = [
         lastVoted: new Date(),
         votes: [],
         submissions: [],
+        suggestions: [],
         options: [
             { id: '1', title: 'Running', userId: 'user30', totalScore: 0, submissionCount: 0, firstPlaceCount: 0, secondPlaceCount: 0, thirdPlaceCount: 0 },
             { id: '2', title: 'Weight Training', userId: 'user31', totalScore: 0, submissionCount: 0, firstPlaceCount: 0, secondPlaceCount: 0, thirdPlaceCount: 0 },
@@ -151,6 +158,7 @@ export const sampleRankingsInitial: RankingModel[] = [
         lastVoted: new Date(),
         votes: [],
         submissions: [],
+        suggestions: [],
         options: [
             { id: '1', title: 'Rock', userId: 'user34', totalScore: 0, submissionCount: 0, firstPlaceCount: 0, secondPlaceCount: 0, thirdPlaceCount: 0 },
             { id: '2', title: 'Hip Hop', userId: 'user35', totalScore: 0, submissionCount: 0, firstPlaceCount: 0, secondPlaceCount: 0, thirdPlaceCount: 0 },
@@ -165,6 +173,7 @@ export const sampleRankingsInitial: RankingModel[] = [
         lastVoted: new Date(),
         votes: [],
         submissions: [],
+        suggestions: [],
         options: [
             { id: '1', title: 'Instagram', userId: 'user38', totalScore: 0, submissionCount: 0, firstPlaceCount: 0, secondPlaceCount: 0, thirdPlaceCount: 0 },
             { id: '2', title: 'Twitter/X', userId: 'user39', totalScore: 0, submissionCount: 0, firstPlaceCount: 0, secondPlaceCount: 0, thirdPlaceCount: 0 },
@@ -179,6 +188,7 @@ export const sampleRankingsInitial: RankingModel[] = [
         lastVoted: new Date(),
         votes: [],
         submissions: [],
+        suggestions: [],
         options: [
             { id: '1', title: 'Pancakes', userId: 'user42', totalScore: 0, submissionCount: 0, firstPlaceCount: 0, secondPlaceCount: 0, thirdPlaceCount: 0 },
             { id: '2', title: 'Eggs & Bacon', userId: 'user43', totalScore: 0, submissionCount: 0, firstPlaceCount: 0, secondPlaceCount: 0, thirdPlaceCount: 0 },
@@ -193,6 +203,7 @@ export const sampleRankingsInitial: RankingModel[] = [
         lastVoted: new Date(),
         votes: [],
         submissions: [],
+        suggestions: [],
         options: [
             { id: '1', title: 'Toyota', userId: 'user46', totalScore: 0, submissionCount: 0, firstPlaceCount: 0, secondPlaceCount: 0, thirdPlaceCount: 0 },
             { id: '2', title: 'Tesla', userId: 'user47', totalScore: 0, submissionCount: 0, firstPlaceCount: 0, secondPlaceCount: 0, thirdPlaceCount: 0 },
@@ -201,3 +212,4 @@ export const sampleRankingsInitial: RankingModel[] = [
         ],
     },
 ];
+

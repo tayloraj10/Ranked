@@ -23,6 +23,10 @@ export const fetchRankings = async (): Promise<RankingModel[]> => {
                 id: doc.id,
                 ...data,
                 lastVoted: data.lastVoted?.toDate?.() || new Date(0),
+                suggestions: (data.suggestions || []).map((s: any) => ({
+                    ...s,
+                    submittedAt: s.submittedAt?.toDate?.() || new Date(s.submittedAt),
+                })),
             } as RankingModel;
         });
     } catch (error) {
@@ -44,6 +48,10 @@ export const fetchRankingById = async (id: string): Promise<RankingModel | null>
             id: snapshot.id,
             ...data,
             lastVoted: data.lastVoted?.toDate?.() || new Date(0),
+            suggestions: (data.suggestions || []).map((s: any) => ({
+                ...s,
+                submittedAt: s.submittedAt?.toDate?.() || new Date(s.submittedAt),
+            })),
         } as RankingModel;
     } catch (error) {
         console.error('Error fetching ranking:', error);
@@ -166,5 +174,47 @@ export const initializeSampleData = async (sampleRankings: RankingModel[]): Prom
         console.log('Sample data initialized');
     } catch (error) {
         console.error('Error initializing sample data:', error);
+    }
+};
+
+/**
+ * Submit a suggestion for a new option
+ */
+export const submitSuggestion = async (
+    rankingId: string,
+    userId: string,
+    optionTitle: string
+): Promise<boolean> => {
+    try {
+        const docRef = doc(db, RANKINGS_COLLECTION, rankingId);
+        const snapshot = await getDoc(docRef);
+        
+        if (!snapshot.exists()) {
+            console.error('Ranking not found');
+            return false;
+        }
+
+        const ranking = snapshot.data() as RankingModel;
+        
+        // Create new suggestion
+        const newSuggestion = {
+            id: `suggestion_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+            optionTitle: optionTitle.trim(),
+            userId,
+            submittedAt: new Date(),
+        };
+
+        // Add suggestion to array
+        const suggestions = ranking.suggestions || [];
+        suggestions.push(newSuggestion);
+
+        await updateDoc(docRef, {
+            suggestions,
+        });
+
+        return true;
+    } catch (error) {
+        console.error('Error submitting suggestion:', error);
+        return false;
     }
 };
