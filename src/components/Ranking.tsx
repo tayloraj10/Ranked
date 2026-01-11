@@ -38,6 +38,7 @@ const Ranking: React.FC<RankingProps> = ({ ranking }) => {
     const [showSuccess, setShowSuccess] = useState(false);
     const [showError, setShowError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const [dragHandleOnly, setDragHandleOnly] = useState(false);
 
     const userSubmission = ranking.submissions.find(s => s.userId === currentUserId);
 
@@ -88,6 +89,25 @@ const Ranking: React.FC<RankingProps> = ({ ranking }) => {
     }, [ranking.id, currentUserId]);
 
     useEffect(() => {
+        // On touch devices, require dragging from the handle to avoid scroll conflicts.
+        // On desktop, allow grabbing anywhere on the row.
+        const mediaQuery = window.matchMedia?.('(pointer: coarse)');
+        if (!mediaQuery) return;
+
+        const update = () => setDragHandleOnly(mediaQuery.matches);
+        update();
+
+        // Safari < 14 uses addListener/removeListener
+        if (typeof mediaQuery.addEventListener === 'function') {
+            mediaQuery.addEventListener('change', update);
+            return () => mediaQuery.removeEventListener('change', update);
+        }
+
+        mediaQuery.addListener(update);
+        return () => mediaQuery.removeListener(update);
+    }, []);
+
+    useEffect(() => {
         // When scores change (after submissions), refresh what we're showing.
         syncDisplayOptions(sortView, hasVoted);
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -101,8 +121,8 @@ const Ranking: React.FC<RankingProps> = ({ ranking }) => {
         }),
         useSensor(TouchSensor, {
             activationConstraint: {
-                delay: 250,
-                tolerance: 5,
+                delay: 100,
+                tolerance: 8,
             },
         }),
         useSensor(KeyboardSensor, {
@@ -288,6 +308,7 @@ const Ranking: React.FC<RankingProps> = ({ ranking }) => {
                                     thirdPlaceCount={option.thirdPlaceCount}
                                     isTopThree={actualRank <= 3}
                                     dragDisabled={dragDisabled}
+                                    dragHandleOnly={dragHandleOnly}
                                 />
                             );
                         })}

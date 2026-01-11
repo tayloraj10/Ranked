@@ -151,6 +151,7 @@
     background: linear-gradient(135deg, transparent 0%, rgba(99, 102, 241, 0.03) 100%);
     opacity: 0;
     transition: opacity 0.25s ease;
+    pointer-events: none;
 }
 
 .ranking-option:hover::before {
@@ -159,10 +160,22 @@
 
 .ranking-option.drag-disabled {
     cursor: default;
+    border-color: var(--border);
 }
 
 .ranking-option.drag-disabled:hover {
     transform: none;
+    border-color: var(--border);
+}
+
+.ranking-option:not(.drag-disabled) {
+    border-color: var(--primary-light);
+    border-style: dashed;
+}
+
+.ranking-option:not(.drag-disabled):hover {
+    border-color: var(--primary);
+    border-style: solid;
 }
 
 .ranking-option.top-three {

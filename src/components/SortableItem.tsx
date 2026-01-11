@@ -15,6 +15,7 @@ interface SortableItemProps {
     thirdPlaceCount: number;
     isTopThree: boolean;
     dragDisabled: boolean;
+    dragHandleOnly?: boolean;
 }
 
 const SortableItem: React.FC<SortableItemProps> = ({ 
@@ -28,10 +29,12 @@ const SortableItem: React.FC<SortableItemProps> = ({
     thirdPlaceCount,
     isTopThree,
     dragDisabled,
+    dragHandleOnly = false,
 }) => {
     const {
         attributes,
         listeners,
+        setActivatorNodeRef,
         setNodeRef,
         transform,
         transition,
@@ -84,7 +87,7 @@ const SortableItem: React.FC<SortableItemProps> = ({
             ref={setNodeRef}
             style={style}
             className={`ranking-option ${isDragging ? 'dragging' : ''} ${isTopThree ? 'top-three' : ''} ${dragDisabled ? 'drag-disabled' : ''}`}
-            {...(!dragDisabled ? { ...attributes, ...listeners } : {})}
+            {...(!dragDisabled && !dragHandleOnly ? { ...attributes, ...listeners } : {})}
         >
             <div className="rank-badge" style={getRankBadgeStyle()}>
                 {rank === 1 && <FaTrophy className="trophy-icon" />}
@@ -106,7 +109,11 @@ const SortableItem: React.FC<SortableItemProps> = ({
                     )}
                 </div>
             </div>
-            <div className="drag-handle">
+            <div
+                className="drag-handle"
+                ref={!dragDisabled && dragHandleOnly ? setActivatorNodeRef : undefined}
+                {...(!dragDisabled && dragHandleOnly ? { ...attributes, ...listeners } : {})}
+            >
                 <FaGripVertical />
             </div>
         </div>
