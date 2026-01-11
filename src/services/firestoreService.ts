@@ -5,8 +5,6 @@ import {
     getDocs,
     setDoc,
     updateDoc,
-    query,
-    Query,
 } from 'firebase/firestore';
 import { db } from '../firebase';
 import type { RankingModel, UserSubmission } from '../models/Ranking';
