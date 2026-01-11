@@ -1,34 +1,46 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  line-height: 1.6;
   font-weight: 400;
 
-  /* Light theme defaults */
-  --bg: #ffffff;
-  /* Pure white for a clean look */
-  --surface: #f8f9fa;
-  /* Subtle grey for surfaces */
-  --text: #333333;
-  /* Neutral dark grey for text */
-  --muted: #adb5bd;
-  /* Softer grey for muted text */
-  --link: #0066ff;
-  /* Bright blue for links */
-  --link-hover: #0044cc;
-  /* Darker blue for hover */
-  --primary: #8b00ff;
-  /* Vibrant purple for primary elements */
-  --focus-outline: #80bdff;
-  /* Light blue for focus outlines */
-  --button-bg: #e9ecef;
-  /* Light grey for button background */
-  --button-border: #dee2e6;
-  /* Neutral grey for button borders */
-  --header-bg: #f1f3f5;
-  /* Soft grey for headers */
+  /* Professional Color System - Light Theme */
+  --bg: #fafbfc;
+  --surface: #ffffff;
+  --surface-elevated: #ffffff;
+  --text: #1a202c;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+
+  /* Brand Colors */
+  --primary: #6366f1;
+  --primary-hover: #4f46e5;
+  --primary-light: #818cf8;
+  --accent: #0ea5e9;
+  --accent-hover: #0284c7;
+
+  /* Semantic Colors */
+  --success: #10b981;
+  --success-light: #d1fae5;
+  --warning: #f59e0b;
+  --warning-light: #fef3c7;
+  --error: #ef4444;
+  --error-light: #fee2e2;
+
+  /* UI Elements */
+  --border: #e2e8f0;
+  --border-hover: #cbd5e1;
+  --focus-ring: #6366f1;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gradient-surface: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
 
   color-scheme: light;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -36,32 +48,48 @@
 }
 
 html[data-theme="dark"] {
-  --bg: #121212;
-  /* Deep black for background */
-  --surface: #1e1e1e;
-  /* Dark grey for surfaces */
-  --text: #e4e4e4;
-  /* Light grey for text */
-  --muted: #a0a0a0;
-  /* Softer grey for muted text */
-  --link: #4ea8de;
-  /* Soft blue for links */
-  --link-hover: #3792c2;
-  /* Slightly darker blue for hover */
-  --primary: #bb86fc;
-  /* Soft purple for primary elements */
-  --focus-outline: #3a86ff;
-  /* Bright blue for focus outlines */
-  --button-bg: #2c2c2c;
-  /* Dark grey for button background */
-  --button-border: #3e3e3e;
-  /* Neutral dark grey for button borders */
-  --header-bg: #1a1a1a;
-  /* Deep grey for headers */
-  --text: #3a6fb0;
+  /* Professional Color System - Dark Theme */
+  --bg: #0f172a;
+  --surface: #1e293b;
+  --surface-elevated: #334155;
+  --text: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
 
+  /* Brand Colors (adjusted for dark mode) */
+  --primary: #818cf8;
+  --primary-hover: #a5b4fc;
+  --primary-light: #6366f1;
+  --accent: #38bdf8;
+  --accent-hover: #7dd3fc;
+
+  /* Semantic Colors */
+  --success: #34d399;
+  --success-light: #064e3b;
+  --warning: #fbbf24;
+  --warning-light: #78350f;
+  --error: #f87171;
+  --error-light: #7f1d1d;
+
+  /* UI Elements */
+  --border: #334155;
+  --border-hover: #475569;
+  --focus-ring: #818cf8;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 1px 2px -1px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -4px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 8px 10px -6px rgba(0, 0, 0, 0.6);
+
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, #818cf8 0%, #c084fc 100%);
+  --gradient-surface: linear-gradient(135deg, #1e293b 0%, #334155 100%);
 
   color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
@@ -70,59 +98,87 @@ body {
   min-height: 100vh;
   background: var(--bg);
   color: var(--text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-  margin: 0.2em 0;
+  font-size: 2.5rem;
+  margin: 0.5em 0;
+}
+
+h2 {
+  font-size: 2rem;
+  margin: 0.5em 0;
+}
+
+h3 {
+  font-size: 1.5rem;
+  margin: 0.5em 0;
 }
 
 a {
   font-weight: 500;
-  color: var(--link);
+  color: var(--primary);
   text-decoration: none;
+  transition: color 0.2s ease;
 }
 
 a:hover {
-  color: var(--link-hover);
+  color: var(--primary-hover);
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid var(--button-border);
-  padding: 0.6em 1.0em;
-  font-size: 0.95em;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  padding: 0.625em 1.25em;
+  font-size: 0.9375rem;
   font-weight: 600;
   font-family: inherit;
-  background-color: var(--button-bg);
+  background-color: var(--surface);
   color: var(--text);
   cursor: pointer;
-  transition: border-color 0.25s, transform 0.05s ease-in-out;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-sm);
 }
 
 button:hover {
   border-color: var(--primary);
+  background-color: var(--surface-elevated);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
 }
 
 button:active {
-  transform: scale(0.98);
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
 }
 
-button:focus,
 button:focus-visible {
-  outline: 4px auto var(--focus-outline);
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
 }
 
 aside {
   background-color: var(--surface);
   color: var(--text);
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-lg);
 }
 
 aside h2 {
   font-size: 1.5rem;
   margin-bottom: 1rem;
+  font-weight: 700;
 }
 
 aside ul {
@@ -135,33 +191,12 @@ aside ul li {
 }
 
 aside ul li a {
-  color: var(--link);
+  color: var(--primary);
   text-decoration: none;
   font-weight: 500;
+  transition: color 0.2s ease;
 }
 
 aside ul li a:hover {
-  color: var(--link-hover);
-}
-
-/* Styling for Autocomplete in dark mode */
-html[data-theme="dark"] .MuiAutocomplete-root {
-  background-color: var(--surface);
-  color: var(--text);
-}
-
-html[data-theme="dark"] .MuiAutocomplete-inputRoot {
-  background-color: var(--surface);
-  color: var(--text);
-  border: 1px solid var(--button-border);
-}
-
-html[data-theme="dark"] .MuiAutocomplete-option {
-  background-color: var(--surface);
-  color: var(--text);
-}
-
-html[data-theme="dark"] .MuiAutocomplete-option:hover {
-  background-color: var(--button-bg);
-  color: var(--text);
+  color: var(--primary-hover);
 }

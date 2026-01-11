@@ -1,46 +1,47 @@
 .featured-rankings-container {
-    margin: auto;
     width: fit-content;
-    padding: 2em;
-    background-color: #ffffff;
+    margin: 0 auto 1.5rem;
+    padding: 1em;
+    background: var(--surface);
     border-radius: 16px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
-    border: 1px solid var(--link);
-    background-color: var(--bg);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+}
+
+.featured-rankings-container:hover {
+    box-shadow: var(--shadow-xl);
+    transform: translateY(-2px);
 }
 
 @media (max-width: 768px) {
     .featured-rankings-container {
-        padding: 1em;
-        border-radius: 12px;
+        padding: 1.25rem;
+        border-radius: 14px;
+        margin: 0 auto 1rem;
     }
 }
 
-[data-theme='dark'] .featured-rankings-container {
-    border-color: var(--primary);
-}
-
 .featured-rankings-title {
-    font-size: 2.5rem;
+    font-size: 1.5rem;
     font-weight: 800;
-    color: #10b981;
     text-align: center;
     text-transform: uppercase;
-    letter-spacing: 3px;
-    line-height: 1.1;
-    background: linear-gradient(90deg, #10b981, #059669);
+    letter-spacing: 0.03em;
+    line-height: 1.2;
+    background: linear-gradient(135deg, var(--success) 0%, var(--accent) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     margin: 0;
-    padding-bottom: .3em;
+    padding-bottom: 0.5em;
     position: relative;
 }
 
 @media (max-width: 768px) {
     .featured-rankings-title {
-        font-size: 1.5rem;
-        letter-spacing: 2px;
+        font-size: 1.25rem;
+        letter-spacing: 0.02em;
     }
 }
 
@@ -50,27 +51,15 @@
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 100%;
-    height: 4px;
-    background: linear-gradient(90deg, #10b981, #059669);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--success), var(--accent));
     border-radius: 2px;
 }
 
 @media (max-width: 768px) {
     .featured-rankings-title::after {
-        height: 3px;
-        width: 40vw;
+        height: 2px;
+        width: 60px;
     }
-}
-
-[data-theme='dark'] .featured-rankings-title {
-    color: #34d399;
-    background: linear-gradient(90deg, #34d399, #10b981);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-[data-theme='dark'] .featured-rankings-title::after {
-    background: linear-gradient(90deg, #10b981, #059669);
 }

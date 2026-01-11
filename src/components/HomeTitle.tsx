@@ -5,22 +5,24 @@ const HomeTitle: React.FC = () => {
     return (
         <div style={{
             textAlign: 'center',
-            padding: '.05em',
-            background: 'linear-gradient(135deg, var(--primary), var(--link))',
-            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+            padding: '.5em',
+            background: 'var(--gradient-primary)',
+            boxShadow: 'var(--shadow-lg)',
             color: 'white',
-            borderRadius: '.3em',
+            borderRadius: '6px',
         }}>
             <h1 style={{
                 margin: '0',
-                fontSize: '2rem',
-                fontWeight: 'bold',
-                letterSpacing: '0.05em'
+                fontSize: '1.75rem',
+                fontWeight: '800',
+                letterSpacing: '-0.02em',
             }}>Welcome to {APP_NAME}</h1>
             <p style={{
                 margin: '0',
                 fontSize: '1rem',
-                fontWeight: '500'
+                fontWeight: '500',
+                opacity: '0.95',
+                letterSpacing: '-0.01em'
             }}>{APP_TAGLINE}</p>
         </div>
     );

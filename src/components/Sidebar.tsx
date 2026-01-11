@@ -97,7 +97,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isDrawerOpen, toggleDrawer }) => {
                             );
                         })}
                 </ul>
-                <button className="create-list-button" onClick={toggleDrawer(false)}>
+                <button className="toggle-button" onClick={toggleDrawer(false)}>
                     <span className="icon-left"><FaArrowLeft /></span>
                 </button>
             </div>

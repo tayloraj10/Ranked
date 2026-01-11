@@ -2,14 +2,22 @@
     position: sticky;
     top: 0;
     z-index: 50;
-    backdrop-filter: saturate(160%) blur(8px);
-    -webkit-backdrop-filter: saturate(160%) blur(8px);
-    background-color: var(--header-bg);
-    border-bottom: 1px solid var(--button-border);
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    background-color: rgba(255, 255, 255, 0.8);
+    border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+}
+
+[data-theme='dark'] .app-header {
+    background-color: rgba(30, 41, 59, 0.8);
 }
 
 .header-inner {
-    padding: 0.75rem 1rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1rem 1.5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -22,37 +30,58 @@
 }
 
 .brand {
-    font-size: 1.5rem;
+    font-size: 1.75rem;
     font-weight: 800;
     line-height: 1;
-    color: var(--primary);
-    background-image: linear-gradient(90deg, var(--primary), var(--link));
+    background: var(--gradient-primary);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-right: .5em;
+    margin-right: 0.5em;
+    letter-spacing: -0.02em;
+    transition: transform 0.2s ease;
+}
+
+.brand:hover {
+    transform: scale(1.02);
 }
 
 .nav {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 1.5rem;
 }
 
 .nav a {
-    color: var(--text);
-    /* Change nav link color to text */
+    color: var(--text-secondary);
     text-decoration: none;
     font-weight: 600;
+    font-size: 0.9375rem;
+    transition: color 0.2s ease;
+    position: relative;
+}
+
+.nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primary);
+    transition: width 0.2s ease;
 }
 
 .nav a:hover {
     color: var(--primary);
-    /* Change hover color to primary */
+}
+
+.nav a:hover::after {
+    width: 100%;
 }
 
 .actions {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.75rem;
 }

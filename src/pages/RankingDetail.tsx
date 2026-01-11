@@ -32,17 +32,9 @@ const RankingDetail: React.FC = () => {
             <main
                 style={{
                     flex: 1,
-                    padding: '2em',
-                    maxWidth: '900px',
+                    padding: '2rem 1.5rem',
+                    maxWidth: '1000px',
                     margin: '0 auto',
                     width: '100%',
                 }}
             >
-             
-                <Ranking ranking={ranking} />
-            </main>
-        </div>
-    );
-};
-
-export default RankingDetail;
